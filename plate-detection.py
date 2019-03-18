@@ -49,7 +49,7 @@ def plateDetection():
             return plate
 
 def centerDrone(centerCoordinates, plateCenter):
-    
+    print "centering"
 
 if __name__ == "__main__":
     main()
