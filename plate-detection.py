@@ -13,6 +13,7 @@ def main():
         imageCenter = {'x' : 512, 'y' : 384}
         # Camera warm-up time
         time.sleep(2)
+        camera.start_preview()
         print "camara ready!"
         while True:
             camera.capture("plate.jpg")
@@ -36,8 +37,9 @@ def plateDetection():
         if len(plateObject.results) <= 0:
             print "no plate detected"
         else:
+            print plateObject
             print "plate is: " + str(plateObject.results[0].plate)
-            print "image height: " + str(plateObject["img height"])
+            print "image height: " + str(plateObject.img_height)
             topLeft = {'x' :plateObject.results[0].coordinates[0].x, 'y' :plateObject.results[0].coordinates[0].y}
             topRight = {'x' :plateObject.results[0].coordinates[1].x, 'y' :plateObject.results[0].coordinates[1].y}
             bottemLeft = {'x' :plateObject.results[0].coordinates[3].x, 'y' :plateObject.results[0].coordinates[3].y}
