@@ -22,7 +22,6 @@ class Drone:
     def __init__(self, URI, height = 0.3, velocity = 0.2):
         self.height = height
         self.velocity = velocity
-        self.link_uri = link_uri
         self._cf = Crazyflie(rw_cache='./cache')
         cflib.crtp.init_drivers(enable_debug_driver=False)
         scf = SyncCrazyflie(URI, cf = self._cf)
@@ -31,18 +30,14 @@ class Drone:
     
 
     def start_drone():
-    """
-    has the drone take off
-    """
+    """has the drone take off"""
         # drone takes off
         self.motionCommander.take_off(height=self.height, velocity=self.velocity)
 
 
     
     def move(direction):
-    """
-    moves the drone at a constant speed in one direction
-    """
+    """moves the drone at a constant speed in one direction"""
         if direction is Direction.UP:
             print "move up"
         if direction is Direction.DOWN:
