@@ -3,9 +3,11 @@ import subprocess
 import time
 import picamera
 from collections import namedtuple
-from libs.Plate import Plate
+from libs.plate import Plate
+from libs.drone import Drone
 
 plateUrl = 'plate.jpg'
+URI = 'usb://0'
 
 def main():
     with picamera.PiCamera() as camera:
@@ -14,6 +16,10 @@ def main():
         # Camera warm-up time
         time.sleep(2)
         camera.start_preview()
+
+        drone = Drone(URI)
+        drone.start_drone()
+
         print "camara ready!"
         while True:
             camera.capture("plate.jpg")
@@ -49,6 +55,7 @@ def plateDetection():
             center = plate.calcCenter()
             print center
             return plate
+    return None
 
 def centerDrone(centerCoordinates, plateCenter):
     print "centering"
