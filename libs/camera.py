@@ -10,13 +10,13 @@ class Camera:
     IMAGE_CENTER = {'x' : 512, 'y' : 384}
 
     def __init__(self):
-        self.camera = picamera.PiCamara()
-        self.camera.resolution = (IMAGE_WIDTH, IMAGE_HEIGHT)
+        self.camera = picamera.PiCamera()
+        self.camera.resolution = (self.IMAGE_WIDTH, self.IMAGE_HEIGHT)
         time.sleep(2)
         self.camera.start_preview()
 
-    def capture():
-        return camera.capture(PLATE_URL)
+    def capture(self):
+        return self.camera.capture(self.PLATE_URL)
 
-    def shutdown_camera():
+    def shutdown_camera(self):
         self.camera.close()

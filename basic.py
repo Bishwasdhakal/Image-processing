@@ -12,6 +12,7 @@ def main():
     drone.land()
     drone.disconnect()
     camera.shutdown_camera()
+    time.sleep(1)
 
 if __name__ == "__main__":
     main()
