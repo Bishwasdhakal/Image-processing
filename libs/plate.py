@@ -20,9 +20,9 @@ class Plate:
         :returns a vector of distance and direction in meters
         """
         print img_center
-        
-        x_pixal = img_center.x - self.center.x
-        y_pixal = img_center.y - self.center.y
+
+        x_pixal = img_center['x'] - self.center['x']
+        y_pixal = img_center['y'] - self.center['y']
         distance = self.distance_from_camara()
 
         x_meter = (self.FOCAL_LENGTH * x_pixal) / distance
@@ -37,7 +37,7 @@ class Plate:
         :Plate plate the license plate
         returns the estimated distance of the plate to the drone 
         """
-        pixalWidth = self.topRight.x - self.topLeft.x
+        pixalWidth = self.topRight['x'] - self.topLeft['x']
         
         distance = (self.FOCAL_LENGTH / self.PLATE_WIDTH) * pixalWidth
         return distance
@@ -45,9 +45,9 @@ class Plate:
     def horizontal_angle(self):
         """measures how scewed the plate is in terms of the camara"""
         hypotenuse = math.sqrt(
-            (self.topLeft.x - self.topRight.x)^2 + 
-            (self.topLeft.y - self.topRight.y)^2)
-        opposite = self.topRight.x - self.topLeft.x
+            (self.topLeft['x'] - self.topRight['x'])^2 + 
+            (self.topLeft['y'] - self.topRight['y'])^2)
+        opposite = self.topRight['x'] - self.topLeft['x']
 
         angle = math.asin(opposite / hypotenuse)
         return math.degrees(angle)
