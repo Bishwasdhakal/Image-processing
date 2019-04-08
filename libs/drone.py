@@ -37,20 +37,27 @@ class Drone:
     def land(self):
         self.motionCommander.land()
     
-    def move(direction, vector):
+    def move(self, vector):
         """moves the drone at a constant speed in one direction"""
-        if direction is Direction.UP:
+        if vector.y > 0:
             print "move up"
-        elif direction is Direction.DOWN:
+            self.motionCommander.up(vector.y)
+        elif vector.y  < 0:
             print "move down"
-        elif direction is Direction.LEFT:
+            self.motionCommander.down(abs(vector.y))
+        if vector.x > 0:
             print "move left"
-        elif direction is Direction.RIGHT:
+            self.motionCommander.left(vector.x)
+        elif vector.x < 0:
             print "move right"
-        elif direction is Direction.FOWARDS:
+            self.motionCommander.right(abs(vector.x))
+        if vector.z > 1:
             print "move fowards"
-        elif direction is Direction.BACKWARDS:
+            self.motionCommander.forward(vector.z - 1)
+            self
+        elif vector.z < 1:
             print "move backwards"
+            self.motionCommander.back(1 - vector.z)
         else:
             print "Invalid command"
 

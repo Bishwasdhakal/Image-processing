@@ -11,17 +11,19 @@ class Plate:
 
     center = {'x' : 0.0, 'y' : 0.0} 
 
-    def calc_center(self):
-        self.center['x'] = (self.topLeft['x'] + self.bottemRight['x']) / 2.0
-        self.center['y'] = (self.topLeft['y'] + self.bottemRight['y']) / 2.0
-        return self.center
-
-    def distance_from_center(img_center):
+    def distance_from_center(self, img_center):
         """
         :param img_center = the center of the image
-        :returns a vector of distance and directio
+        :returns a vector of distance and direction in meters
         """
-        return {"x" : img_center.x - self.center.x, "y" : img_center.y - self.center.y}
+        x_pixal = img_center.x - self.center.x
+        y_pixal = img_center.y - self.center.y
+        distance = self.distance_from_camara
+
+        x_meter = (self.FOCAL_LENGTH * x_pixal) / distance
+        y_meter = (self.FOCAL_LENGTH * y_pixal) / distance
+
+        return {"x" : x_meter, "y" : y_meter, "z" : distance}
 
     def distance_from_camara(self):
         """
@@ -30,7 +32,7 @@ class Plate:
         """
         pixalWidth = self.topRight.x - self.topLeft.x
         
-        distance = (FOCAL_LENGTH / PLATE_WIDTH) * pixalWidth
+        distance = (self.FOCAL_LENGTH / self.PLATE_WIDTH) * pixalWidth
         return distance
 
     def horizontal_angle(self):
@@ -47,7 +49,7 @@ class Plate:
         """
         looks for a plate in the image and then returns the center of the plate coordinates
         """
-        bashCommand = 'alpr -j -n 1 ' + PLATE_URL
+        bashCommand = 'alpr -j -n 1 ' + self.PLATE_URL
         process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
         output, error = process.communicate()
 
@@ -66,3 +68,10 @@ class Plate:
                 self.topRight = {'x' :plateObject.results[0].coordinates[1].x, 'y' :plateObject.results[0].coordinates[1].y}
                 self.bottemLeft = {'x' :plateObject.results[0].coordinates[3].x, 'y' :plateObject.results[0].coordinates[3].y}
                 self.bottemRight = {'x' :plateObject.results[0].coordinates[2].x, 'y' :plateObject.results[0].coordinates[2].y}
+                self._calc_center()
+                return True
+        return False
+
+    def _calc_center(self):
+        self.center['x'] = (self.topLeft['x'] + self.bottemRight['x']) / 2.0
+        self.center['y'] = (self.topLeft['y'] + self.bottemRight['y']) / 2.0
