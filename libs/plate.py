@@ -24,9 +24,9 @@ class Plate:
         x_pixal = img_center['x'] - self.center['x']
         y_pixal = img_center['y'] - self.center['y']
         distance = self.distance_from_camara()
-
-        x_meter = (self.FOCAL_LENGTH * x_pixal) / distance
-        y_meter = (self.FOCAL_LENGTH * y_pixal) / distance
+        ratio = self.PLATE_WIDTH / self.pixalWidth
+        x_meter = x_pixal * ratio
+        y_meter = y_pixal * ratio
         print distance
         print x_meter
         print y_meter
@@ -37,7 +37,7 @@ class Plate:
         :Plate plate the license plate
         returns the estimated distance of the plate to the drone 
         """
-        pixalWidth = self.topRight['x'] - self.topLeft['x']
+        self.pixalWidth = self.topRight['x'] - self.topLeft['x']
         
         distance = (self.FOCAL_LENGTH * self.PLATE_WIDTH) / pixalWidth
         return distance
