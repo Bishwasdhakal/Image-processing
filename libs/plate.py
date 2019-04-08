@@ -45,7 +45,7 @@ class Plate:
         angle = math.asin(opposite / hypotenuse)
         return math.degrees(angle)
 
-    def detect_plate():
+    def detect_plate(self):
         """
         looks for a plate in the image and then returns the center of the plate coordinates
         """
