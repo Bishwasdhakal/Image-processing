@@ -21,11 +21,13 @@ class Plate:
         """
         x_pixal = img_center.x - self.center.x
         y_pixal = img_center.y - self.center.y
-        distance = self.distance_from_camara
+        distance = self.distance_from_camara()
 
         x_meter = (self.FOCAL_LENGTH * x_pixal) / distance
         y_meter = (self.FOCAL_LENGTH * y_pixal) / distance
-
+        print distance
+        print x_meter
+        print y_meter
         return {"x" : x_meter, "y" : y_meter, "z" : distance}
 
     def distance_from_camara(self):
@@ -55,7 +57,6 @@ class Plate:
         bashCommand = 'alpr -j -n 1 ' + self.PLATE_URL
         process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
         output, error = process.communicate()
-        print output
 
         if error is not None:
             print error
