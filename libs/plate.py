@@ -24,7 +24,7 @@ class Plate:
         x_pixal = img_center['x'] - self.center['x']
         y_pixal = img_center['y'] - self.center['y']
         distance = self.distance_from_camara()
-        ratio = self.PLATE_WIDTH / self.pixalWidth
+        ratio = self.PLATE_WIDTH / (self.topRight['x'] - self.topLeft['x'])
         x_meter = x_pixal * ratio
         y_meter = y_pixal * ratio
         print distance
