@@ -1,4 +1,7 @@
 import math
+import json
+import subprocess
+from collections import namedtuple
 
 class Plate:
     PLATE_URL = 'plate.jpg'
