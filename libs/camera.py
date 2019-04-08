@@ -9,7 +9,7 @@ class Camera:
     IMAGE_WIDTH = 1024
     IMAGE_CENTER = {'x' : 512, 'y' : 384}
 
-    def __init__():
+    def __init__(self):
         self.camera = picamera.PiCamara()
         self.camera.resolution = (IMAGE_WIDTH, IMAGE_HEIGHT)
         time.sleep(2)
