@@ -39,7 +39,7 @@ class Plate:
         """
         pixalWidth = self.topRight['x'] - self.topLeft['x']
         
-        distance = (self.FOCAL_LENGTH / self.PLATE_WIDTH) * pixalWidth
+        distance = (self.FOCAL_LENGTH * self.PLATE_WIDTH) / pixalWidth
         return distance
 
     def horizontal_angle(self):
