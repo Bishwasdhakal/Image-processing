@@ -39,25 +39,25 @@ class Drone:
     
     def move(self, vector):
         """moves the drone at a constant speed in one direction"""
-        if vector.y > 0:
+        if vector['y'] > 0:
             print "move up"
-            self.motionCommander.up(vector.y)
-        elif vector.y  < 0:
+            self.motionCommander.up(vector['y'])
+        elif vector['y']  < 0:
             print "move down"
-            self.motionCommander.down(abs(vector.y))
-        if vector.x > 0:
+            self.motionCommander.down(abs(vector['y']))
+        if vector['x'] > 0:
             print "move left"
-            self.motionCommander.left(vector.x)
-        elif vector.x < 0:
+            self.motionCommander.left(vector['x'])
+        elif vector['x'] < 0:
             print "move right"
-            self.motionCommander.right(abs(vector.x))
-        if vector.z > 1:
+            self.motionCommander.right(abs(vector['x']))
+        if vector['z'] > 1:
             print "move fowards"
-            self.motionCommander.forward(vector.z - 1)
+            self.motionCommander.forward(vector['z'] - 1)
             self
-        elif vector.z < 1:
+        elif vector['z'] < 1:
             print "move backwards"
-            self.motionCommander.back(1 - vector.z)
+            self.motionCommander.back(1 - vector['z'])
         else:
             print "Invalid command"
 
