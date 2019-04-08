@@ -16,8 +16,8 @@ def main():
     while x < 20:
         camera.capture()
         detected = plate.detect_plate()
-        distance_from_center = plate.distance_from_center(camera.IMAGE_CENTER)
         if detected:
+            distance_from_center = plate.distance_from_center(camera.IMAGE_CENTER)
             drone.move(distance_from_center)
         else:
             print "noting found"
