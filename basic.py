@@ -17,6 +17,7 @@ def main():
         print x
         camera.capture()
         detected = plate.detect_plate()
+        print camera.IMAGE_CENTER
         if detected:
             distance_from_center = plate.distance_from_center(camera.IMAGE_CENTER)
             drone.move(distance_from_center)

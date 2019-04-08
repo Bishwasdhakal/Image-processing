@@ -19,6 +19,8 @@ class Plate:
         :param img_center = the center of the image
         :returns a vector of distance and direction in meters
         """
+        print img_center
+        
         x_pixal = img_center.x - self.center.x
         y_pixal = img_center.y - self.center.y
         distance = self.distance_from_camara()
