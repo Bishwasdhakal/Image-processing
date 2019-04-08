@@ -14,6 +14,7 @@ def main():
     plate = Plate()
     x = 0
     while x < 20:
+        print x
         camera.capture()
         detected = plate.detect_plate()
         if detected:

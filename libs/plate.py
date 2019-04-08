@@ -55,6 +55,7 @@ class Plate:
         bashCommand = 'alpr -j -n 1 ' + self.PLATE_URL
         process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
         output, error = process.communicate()
+        print output
 
         if error is not None:
             print error
