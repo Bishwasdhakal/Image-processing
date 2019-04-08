@@ -7,7 +7,7 @@ class Plate:
     PLATE_URL = 'plate.jpg'
 
     # focal length of piCamara
-    FOCAL_LENGTH = 719.085714286
+    FOCAL_LENGTH = 924.657534247
 
     # plate width in meters
     PLATE_WIDTH = 0.3048
