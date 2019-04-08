@@ -1,6 +1,7 @@
 import math
 
 class Plate:
+    PLATE_URL = 'plate.jpg'
 
     # focal length of piCamara
     FOCAL_LENGTH = 719.085714286
@@ -9,13 +10,6 @@ class Plate:
     PLATE_WIDTH = 0.3048
 
     center = {'x' : 0.0, 'y' : 0.0} 
-
-    def __init__(self, topLeft, topRight, bottemLeft, bottemRight):
-        self.topLeft = topLeft
-        self.topRight = topRight
-        self.bottemLeft = bottemLeft
-        self.bottemRight = bottemRight
-        self.center = self.calc_center()
 
     def calc_center(self):
         self.center['x'] = (self.topLeft['x'] + self.bottemRight['x']) / 2.0
@@ -33,7 +27,6 @@ class Plate:
         """
         :Plate plate the license plate
         returns the estimated distance of the plate to the drone 
-        
         """
         pixalWidth = self.topRight.x - self.topLeft.x
         
@@ -50,10 +43,26 @@ class Plate:
         angle = math.asin(opposite / hypotenuse)
         return math.degrees(angle)
 
-if __name__ == "__main__":
-    topLeft = {'x' : 0, 'y' : 1000}
-    topRight = {'x' : 1000, 'y' : 1000}
-    bottemLeft = {'x' : 0, 'y' : 0}
-    bottemRight = {'x' : 1000, 'y' : 0}
-    plate = Plate(topLeft, topRight, bottemLeft, bottemRight)
-    print plate.calcCenter()
+    def detect_plate():
+        """
+        looks for a plate in the image and then returns the center of the plate coordinates
+        """
+        bashCommand = 'alpr -j -n 1 ' + PLATE_URL
+        process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
+        output, error = process.communicate()
+
+        if error is not None:
+            print error
+        else:
+            #print output
+            plateObject = json.loads(str(output), object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
+            if len(plateObject.results) <= 0:
+                print "no plate detected"
+            else:
+                print plateObject
+                print "plate is: " + str(plateObject.results[0].plate)
+                print "image height: " + str(plateObject.img_height)
+                self.topLeft = {'x' :plateObject.results[0].coordinates[0].x, 'y' :plateObject.results[0].coordinates[0].y}
+                self.topRight = {'x' :plateObject.results[0].coordinates[1].x, 'y' :plateObject.results[0].coordinates[1].y}
+                self.bottemLeft = {'x' :plateObject.results[0].coordinates[3].x, 'y' :plateObject.results[0].coordinates[3].y}
+                self.bottemRight = {'x' :plateObject.results[0].coordinates[2].x, 'y' :plateObject.results[0].coordinates[2].y}

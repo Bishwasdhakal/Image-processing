@@ -14,28 +14,31 @@ class Drone:
     """Drone instance. Starts and flies drone"""
     logging.basicConfig(level=logging.ERROR)
 
-    def __init__(self, URI):
-    """
-    Init commad connects to drone
-    :param URI: URI
-    """
+    URI = 'radio://0/80/250K'
+
+    def __init__(self, URI='radio://0/80/250K'):
+        """
+        Init commad connects to drone
+        :param URI: URI
+        """
         self._cf = Crazyflie(rw_cache='./cache')
         cflib.crtp.init_drivers(enable_debug_driver=False)
-        scf = SyncCrazyflie(URI, cf = self._cf)
-        self.motionCommander = MotionCommander(scf)
-        self.multiranger = Multiranger(scf)
+        self.scf = SyncCrazyflie(URI, cf = self._cf)
+        self.scf.__enter__()
+        self.motionCommander = MotionCommander(self.scf)
+        self.multiranger = Multiranger(self.scf)
     
 
-    def start_drone(height = 0.3, velocity = 0.2):
-    """has the drone take off"""
+    def take_off(self, height = 0.3, velocity = 0.2):
+        """has the drone take off"""
         # drone takes off
         self.motionCommander.take_off(height = height, velocity = velocity)
 
-    def land_drone(self):
+    def land(self):
         self.motionCommander.land()
     
     def move(direction, vector):
-    """moves the drone at a constant speed in one direction"""
+        """moves the drone at a constant speed in one direction"""
         if direction is Direction.UP:
             print "move up"
         elif direction is Direction.DOWN:
@@ -51,6 +54,8 @@ class Drone:
         else:
             print "Invalid command"
 
+    def disconnect(self):
+        self.scf.close_link()
 
     def is_close(range):
         MIN_DISTANCE = 0.4  # m
