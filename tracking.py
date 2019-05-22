@@ -4,7 +4,7 @@ from libs.plate import Plate
 import time
 
 def main():
-    drone = Drone()
+    drone = Drone("radio://0/80/2M")
     camera = Camera()
 
     drone.take_off()
@@ -13,7 +13,7 @@ def main():
 
     plate = Plate()
     x = 0
-    while x < 20:
+    while x < 15:
         print x
         camera.capture()
         detected = plate.detect_plate()
@@ -22,11 +22,9 @@ def main():
             distance_from_center = plate.distance_from_center(camera.IMAGE_CENTER)
             drone.move(distance_from_center)
         else:
-            print "noting found"
+            print "nothing found"
         time.sleep(1)
         x = x + 1
-
-
 
     time.sleep(5)
 

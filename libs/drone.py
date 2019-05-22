@@ -26,10 +26,10 @@ class Drone:
         self.scf = SyncCrazyflie(URI, cf = self._cf)
         self.scf.__enter__()
         self.motionCommander = MotionCommander(self.scf)
-        self.multiranger = Multiranger(self.scf)
+        #self.multiranger = Multiranger(self.scf)
     
 
-    def take_off(self, height = 0.3, velocity = 0.2):
+    def take_off(self, height = 1.0, velocity = 0.2):
         """has the drone take off"""
         # drone takes off
         self.motionCommander.take_off(height = height, velocity = velocity)
@@ -39,27 +39,25 @@ class Drone:
     
     def move(self, vector):
         """moves the drone at a constant speed in one direction"""
-        if vector['y'] > 0:
-            print "move up"
-            self.motionCommander.up(vector['y'])
-        elif vector['y']  < 0:
-            print "move down"
-            self.motionCommander.down(abs(vector['y']))
-        if vector['x'] > 0:
-            print "move left"
-            self.motionCommander.left(vector['x'])
-        elif vector['x'] < 0:
-            print "move right"
-            self.motionCommander.right(abs(vector['x']))
-        if vector['z'] > 1:
-            print "move fowards"
-            self.motionCommander.forward(vector['z'] - 1)
+        if vector['y'] > 0.1:
+            print "move up by {}m".format(vector['y'])
+            self.motionCommander.up(vector['y'], velocity=0.4)
+        elif vector['y']  < -0.1:
+            print "move down by {}m".format(abs(vector['y']))
+            self.motionCommander.down(abs(vector['y']), velocity=0.4)
+        if vector['x'] > 0.1:
+            print "move left by {}m".format(vector['x'])
+            self.motionCommander.left(vector['x'], velocity=0.4)
+        elif vector['x'] < -0.1:
+            print "move right by {}m".format(abs(vector['x']))
+            self.motionCommander.right(abs(vector['x']), velocity=0.4)
+        if vector['z'] > 2.1:
+            print "move fowards by {}m".format(vector['z'] - 2.0)
+            self.motionCommander.forward(vector['z'] - 2.0, velocity=0.4)
             self
-        elif vector['z'] < 1:
-            print "move backwards"
-            self.motionCommander.back(1 - vector['z'])
-        else:
-            print "Invalid command"
+        elif vector['z'] < 1.9:
+            print "move backwards by {}m".format(2.0 - vector['z'])
+            self.motionCommander.back(2.0 - vector['z'], velocity=0.4)
 
     def disconnect(self):
         self.scf.close_link()

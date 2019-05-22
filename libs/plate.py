@@ -10,7 +10,8 @@ class Plate:
     FOCAL_LENGTH = 924.657534247
 
     # plate width in meters
-    PLATE_WIDTH = 0.3048
+    #PLATE_WIDTH = 0.3048
+    PLATE_WIDTH = 0.165
 
     center = {'x' : 0.0, 'y' : 0.0} 
 
@@ -27,9 +28,9 @@ class Plate:
         ratio = self.PLATE_WIDTH / self.pixalWidth
         x_meter = x_pixal * ratio
         y_meter = y_pixal * ratio
-        print distance
-        print x_meter
-        print y_meter
+        #print distance
+        #print x_meter
+        #print y_meter
         return {"x" : x_meter, "y" : y_meter, "z" : distance}
 
     def distance_from_camara(self):
@@ -68,9 +69,9 @@ class Plate:
             if len(plateObject.results) <= 0:
                 print "no plate detected"
             else:
-                print plateObject
+                #print plateObject
                 print "plate is: " + str(plateObject.results[0].plate)
-                print "image height: " + str(plateObject.img_height)
+                #print "image height: " + str(plateObject.img_height)
                 self.topLeft = {'x' :plateObject.results[0].coordinates[0].x, 'y' :plateObject.results[0].coordinates[0].y}
                 self.topRight = {'x' :plateObject.results[0].coordinates[1].x, 'y' :plateObject.results[0].coordinates[1].y}
                 self.bottemLeft = {'x' :plateObject.results[0].coordinates[3].x, 'y' :plateObject.results[0].coordinates[3].y}
